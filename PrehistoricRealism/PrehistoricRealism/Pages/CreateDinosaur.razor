@@ -1,0 +1,35 @@
+﻿@page "/Dinosaurs/Create"
+@using PrehistoricRealism.Data.Services
+@using PrehistoricRealism.Data
+@inject DinoServices objDinoServices
+@inject NavigationManager NavigationManager
+<h3>CreateDinosaur</h3>
+
+<form action="/" method="post">
+    <div class="form-group">
+        <label for="Name" class="control-label">Name</label>
+        <input form="Name" class="form-control" @bind="@objDino.Name" />
+    </div>
+    <div class="form-group">
+        <label for="Diet" class="control-label">Diet</label>
+        <select @bind="objDino.Diet" class="form-control">
+            <option>--Select--</option>
+                <option value="Carnivore">Carnivore</option>
+                <option value="Herbivore">Herbivore</option>
+                <option value="Omnivore">Omnivore</option>
+        </select>
+    </div>
+</form>
+@code {
+    DinosaurInfo objDino = new DinosaurInfo();
+    protected async void CreateDino()
+    {
+        await objDinoServices.CreateDinosaur(objDino);
+        NavigationManager.NavigateTo("Dinosaurs");
+
+    }
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("Dinosaurs");
+    }
+}
