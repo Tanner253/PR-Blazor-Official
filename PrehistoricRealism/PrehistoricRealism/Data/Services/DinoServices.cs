@@ -81,20 +81,22 @@ namespace PrehistoricRealism.Data.Services
 
                 Console.WriteLine(e);
                 return null;
+           
             }
         }
 
-        public async Task<IEnumerable<DinosaurInfo>> GetDinosaurs()
+        public async Task<List<DinosaurInfo>> GetDinosaurs()
         {
             try
             {
                 var dinosaurs = await _db.Dinosaurs.ToListAsync();
                 return dinosaurs;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e);
-                return null;            }
+              
+                return new List<DinosaurInfo>();
+            }
         }
 
         public async Task UpdateDinosaur(int id, [Bind("Name,Diet,NeedToKnow,Behavior,SocialInteraction,PackLimits,Image,AdditionalInfo")] DinosaurInfo dinosaur)
@@ -117,19 +119,19 @@ namespace PrehistoricRealism.Data.Services
             }
         }
 
-        public async Task<IEnumerable<DinosaurInfo>> GetCarnis()
+        public async Task<IOrderedEnumerable<DinosaurInfo>> GetCarnis()
         {
             try
             {
-                var carnis = await _db.Dinosaurs.ToListAsync();
+
+            var carnis = await _db.Dinosaurs.ToListAsync();
                 var query = carnis.Where(n => n.Diet == DinosaurInfo.Food.Carnivore).OrderBy(n => n.Name);
                 return query;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
+            catch (Exception) {
                 return null;
             }
+         
         }
     }
 }

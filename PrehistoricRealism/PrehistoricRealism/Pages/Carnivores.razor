@@ -1,15 +1,13 @@
-﻿@page "/dinosaurs/carnivores"
+﻿@page "/carnivores"
 @using PrehistoricRealism.Data.Services
 @using PrehistoricRealism.Data
 @inject DinoServices objDinoService
+@OnInitializedAsync();
 
-
-<h3>Carnivores</h3>
-<NavLink class="nav-link" href="">
+<NavLink class="nav-link" href="/createdino">
     <span class="oi oi-plus" aria-hidden="true"></span> Add New
 </NavLink>
 <h1>Carnivore information</h1>
-
 @if (objDinoService == null)
 {
     <p><em>Loading...</em></p>
@@ -26,6 +24,7 @@ else
             </tr>
         </thead>
         <tbody>
+  
             @foreach (var dino in dinoObj)
             {
                 <tr>
@@ -38,7 +37,7 @@ else
                             <span class="oi oi-pencil" aria-hidden="true"> </span> Edit
                         </a>
                         <a class="nav-link" href="DeleteCarnivore/@dino.ID">
-                            <span class="oi oi-pencil" aria-hidden="true"> </span> Delete
+                            <span class="oi oi-trash" aria-hidden="true"> </span> Delete
                         </a>
                     </td>
                 </tr>
@@ -47,10 +46,11 @@ else
     </table>
 }
 @code {
-    IEnumerable<DinosaurInfo> dinoObj;
+    List<DinosaurInfo> dinoObj;
 
-    protected async Task onStartAsync()
+    protected override async Task OnInitializedAsync()
     {
-        dinoObj = await Task.Run(() => objDinoService.GetCarnis());
+        dinoObj = await objDinoService.GetDinosaurs();
     }
+
 }
