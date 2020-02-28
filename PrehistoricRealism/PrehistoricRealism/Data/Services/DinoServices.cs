@@ -119,17 +119,10 @@ namespace PrehistoricRealism.Data.Services
 
         public async Task<IEnumerable<DinosaurInfo>> GetCarnis()
         {
-            try
-            {
-                var carnis = await _db.Dinosaurs.ToListAsync();
+            var carnis = await _db.Dinosaurs.ToListAsync();
                 var query = carnis.Where(n => n.Diet == DinosaurInfo.Food.Carnivore).OrderBy(n => n.Name);
                 return query;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return null;
-            }
+         
         }
     }
 }

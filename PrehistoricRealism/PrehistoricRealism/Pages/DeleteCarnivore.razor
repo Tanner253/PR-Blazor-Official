@@ -1,5 +1,76 @@
-﻿<h3>DeleteCarnivore</h3>
+﻿@page "/DeleteDino/{id}"
+@using PrehistoricRealism.Data.Services
+@using PrehistoricRealism.Data
+@inject DinoServices objDinoServices
+@inject NavigationManager NavigationManager
+<h3>Delete Dinosaur</h3>
 
+
+<h3>
+    Are you sure you want to delete this dinosaur?
+</h3>
+
+<div class="row">
+    <div class=" col-md-8">
+        <div class="form-group">
+            <label>Dinosaur ID</label>
+            <label>@dino.ID</label>
+        </div>
+        <div class="form-group">
+            <label>Dinosaur Name</label>
+            <label>@dino.Name</label>
+        </div>
+        <div class="form-group">
+            <label>Dinosaur Diet</label>
+            <label>@dino.Diet</label>
+        </div>
+        <div class="form-group">
+            <label>Dinosaur Behavior</label>
+            <label>@dino.Behavior</label>
+        </div>
+        <div class="form-group">
+            <label>Dinosaur Additional Info</label>
+            <label>@dino.Additionalinfo</label>
+        </div>
+        <div class="form-group">
+            <label>Dinosaur Image</label>
+            <label>@dino.Image</label>
+        </div>
+        <div class="form-group">
+            <label>Dinosaur Need To Know</label>
+            <label>@dino.NeedToKnow</label>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <input type="button" class="btn btn-danger" @onclick="DeleteDinosaur" value="Delete" />
+            <input type="button" class="btn btn-primary" @onclick="Cancel" value="Cancel" />
+        </div>
+    </div>
+</div>
 @code {
+    [Parameter]
+    public string id { get; set; }
+    DinosaurInfo dinoID;
+    DinosaurInfo dino = new DinosaurInfo();
+    protected async Task onStartAsync()
+    {
+        dinoID = await Task.Run(() => objDinoServices.GetDinosaur(Convert.ToInt32(id)));
+    }
+    private async void DeleteDinosaur()
+    {
+        if (objDinoServices.DinosaurExists(dinoID.ID))
+        {
+            await objDinoServices.DeleteDinosaurFR(dinoID.ID);
 
+        }
+        NavigationManager.NavigateTo("Index");
+    }
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo("Index");
+    }
 }

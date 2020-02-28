@@ -1,7 +1,8 @@
-﻿@page "/dinosaurs/carnivores"
+﻿@page "/carnivores"
 @using PrehistoricRealism.Data.Services
 @using PrehistoricRealism.Data
 @inject DinoServices objDinoService
+@onStartAsync();
 
 
 <h3>Carnivores</h3>
@@ -9,7 +10,6 @@
     <span class="oi oi-plus" aria-hidden="true"></span> Add New
 </NavLink>
 <h1>Carnivore information</h1>
-
 @if (objDinoService == null)
 {
     <p><em>Loading...</em></p>
@@ -51,6 +51,6 @@ else
 
     protected async Task onStartAsync()
     {
-        dinoObj = await Task.Run(() => objDinoService.GetCarnis());
+        dinoObj = await objDinoService.GetCarnis();
     }
 }
