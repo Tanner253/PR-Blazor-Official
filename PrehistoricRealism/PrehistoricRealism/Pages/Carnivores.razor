@@ -4,9 +4,7 @@
 @inject DinoServices objDinoService
 @OnInitializedAsync();
 
-
-<h3>Carnivores</h3>
-<NavLink class="nav-link" href="">
+<NavLink class="nav-link" href="/createdino">
     <span class="oi oi-plus" aria-hidden="true"></span> Add New
 </NavLink>
 <h1>Carnivore information</h1>
@@ -26,6 +24,7 @@ else
             </tr>
         </thead>
         <tbody>
+  
             @foreach (var dino in dinoObj)
             {
                 <tr>
@@ -47,10 +46,11 @@ else
     </table>
 }
 @code {
-    IEnumerable<DinosaurInfo> dinoObj;
+    List<DinosaurInfo> dinoObj;
 
-    protected async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        dinoObj = await objDinoService.GetCarnis();
+        dinoObj = await objDinoService.GetDinosaurs();
     }
+
 }

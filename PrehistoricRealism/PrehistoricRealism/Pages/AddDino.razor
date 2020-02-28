@@ -1,4 +1,4 @@
-﻿@page "/Dinosaurs/Create"
+﻿@page "/createdino"
 @using PrehistoricRealism.Data.Services
 @using PrehistoricRealism.Data
 @inject DinoServices objDinoServices
@@ -14,8 +14,8 @@
             </div>
             <div class="form-group">
                 <label for="Diet" class="control-label">Name</label>
-                <select @bind="dino.Diet" class="form-control" >
-                    <option value="">--Select--</option>
+                <select @bind="dino.Diet" class="form-control" >@*  *@
+                    <option value="--Select--">--Select--</option>
                     <option value="@DinosaurInfo.Food.Herbivore">--Herbivore--</option>
                     <option value="@DinosaurInfo.Food.Carnivore">--Carnivore--</option>
                     <option value="@DinosaurInfo.Food.Omnivore">--Omnivore--</option>
@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
                 <label for="NeedToKnow" class="control-label">Need To Know</label>
-                <input form="NeedToKnow" class="form-control" @bind="@dino.Name" />
+                <input form="NeedToKnow" class="form-control" @bind="@dino.NeedToKnow" />
             </div>
             <div class="form-group">
                 <label for="Behavior" class="control-label">Behavior</label>
@@ -59,14 +59,16 @@
 </form>
 
 @code {
-    DinosaurInfo dino = new DinosaurInfo();
+        DinosaurInfo dino = new DinosaurInfo();
+
+ 
     private async void CreateDinosaur()
     {
         await objDinoServices.CreateDinosaur(dino);
-        NavigationManager.NavigateTo("Index");
+        NavigationManager.NavigateTo("/");
     }
     private void Cancel()
     {
-        NavigationManager.NavigateTo("Index");
+        NavigationManager.NavigateTo("/");
     }
 }
