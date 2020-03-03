@@ -1,82 +1,91 @@
-﻿@page "/EditDino/{id}"
+﻿@page "/EditDino/{CurrentId}"
 @using PrehistoricRealism.Data.Services
 @using PrehistoricRealism.Data
 @inject DinoServices objDinoServices
 @inject NavigationManager NavigationManager
 
-<h3>Update Dinosaur</h3>
-<form>
-    <div class="row">
-        <div class="col-md-8">
-            <div class="form-group">
-                <div class="form-group">
-                    <input for="Name" class="form-check" @bind="dino.ID" />
-                </div>
-                <label for="Name" class="control-label">Name</label>
-                <input form="Name" class="form-control" @bind="@dino.Name" />
-            </div>
-            <div class="form-group">
-                <label for="Diet" class="control-label">Name</label>
-                <select @bind="dino.Diet" class="form-control">
-                    <option value="">--Select--</option>
-                    <option value="@DinosaurInfo.Food.Herbivore">--Herbivore--</option>
-                    <option value="@DinosaurInfo.Food.Carnivore">--Carnivore--</option>
-                    <option value="@DinosaurInfo.Food.Omnivore">--Omnivore--</option>
-                </select>
+@if (dino == null)
+{
+    <p><em>Loading...</em></p>
 
-            </div>
-            <div class="form-group">
-                <label for="NeedToKnow" class="control-label">Need To Know</label>
-                <input form="NeedToKnow" class="form-control" @bind="@dino.Name" />
-            </div>
-            <div class="form-group">
-                <label for="Behavior" class="control-label">Behavior</label>
-                <input form="Behavior" class="form-control" @bind="@dino.Behavior" />
-            </div>
-            <div class="form-group">
-                <label for="SocialInteraction" class="control-label">Social Interaction</label>
-                <input form="SocialInteraction" class="form-control" @bind="@dino.SocialInteraction" />
-            </div>
-            <div class="form-group">
-                <label for="PackLimits" class="control-label">Pack Limits</label>
-                <input form="PackLimits" class="form-control" @bind="@dino.PackLimits" />
-            </div>
-            <div class="form-group">
-                <label for="Image" class="control-label">Image URL String</label>
-                <input form="Image" class="form-control" @bind="@dino.Image" />
-            </div>
-            <div class="form-group">
-                <label for="Additionalinfo" class="control-label">Bonus Information</label>
-                <input form="Additionalinfo" class="form-control" @bind="@dino.Additionalinfo" />
+}
+else
+{
+    <h3>Update Dinosaur (ID: @dino.ID)</h3>
+    <form>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                     
+                    <div class="form-group">
+                    </div>
+                    <label for="Name" class="control-label">Name</label>
+                    <input form="Name" class="form-control" @bind="@dino.Name" />
+                </div>
+                <div class="form-group">
+                    <label for="Diet" class="control-label">Diet</label>
+                    <select @bind="dino.Diet"  class="form-control">
+                        <option value="@DinosaurInfo.Food.Herbivore">--Herbivore--</option>
+                        <option value="@DinosaurInfo.Food.Carnivore">--Carnivore--</option>
+                        <option value="@DinosaurInfo.Food.Omnivore">--Omnivore--</option>
+                    </select>
+
+                </div>
+                <div class="form-group">
+                    <label for="NeedToKnow" class="control-label">Need To Know</label>
+                    <input form="NeedToKnow" class="form-control" @bind="@dino.NeedToKnow" />
+                </div>
+                <div class="form-group">
+                    <label for="Behavior" class="control-label">Behavior</label>
+                    <input form="Behavior" class="form-control" @bind="@dino.Behavior" />
+                </div>
+                <div class="form-group">
+                    <label for="SocialInteraction" class="control-label">Social Interaction</label>
+                    <input form="SocialInteraction" class="form-control" @bind="@dino.SocialInteraction" />
+                </div>
+                <div class="form-group">
+                    <label for="PackLimits" class="control-label">Pack Limits</label>
+                    <input form="PackLimits" class="form-control" @bind="@dino.PackLimits" />
+                </div>
+                <div class="form-group">
+                    <label for="Image" class="control-label">Image URL String</label>
+                    <img width="500" src="@dino.Image" alt="@dino.Name" />
+                    <input form="Image" class="form-control" @bind="@dino.Image" />
+                </div>
+                <div class="form-group">
+                    <label for="Additionalinfo" class="control-label">Bonus Information</label>
+                    <input form="Additionalinfo" class="form-control" @bind="@dino.Additionalinfo" />
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <input type="button" class="btn btn-primary" @onclick="UpdateDinosaur" value="Save" />
-                <input type="button" class="btn btn-primary" @onclick="Cancel" value="Cancel" />
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <input type="button" class="btn btn-primary" @onclick="UpdateDinosaur" value="Save" />
+                    <input type="button" class="btn btn-primary" @onclick="Cancel" value="Cancel" />
+                </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
+}
+
 
 @code {
     [Parameter]
-    public string id { get; set; }
-    DinosaurInfo dinoID;
-    DinosaurInfo dino = new DinosaurInfo();
-    protected async Task onStartAsync()
+    public string CurrentId { get; set; }
+    DinosaurInfo dino;
+
+    protected override async Task OnInitializedAsync()
     {
-        dinoID = await Task.Run(() => objDinoServices.GetDinosaur(Convert.ToInt32(id)));
+        dino = await objDinoServices.GetDinosaur(Convert.ToInt32(CurrentId));
     }
     private async void UpdateDinosaur()
     {
-        await objDinoServices.UpdateDinosaur(dinoID.ID, dino);
-        NavigationManager.NavigateTo("Index");
+        await objDinoServices.UpdateDinosaur(dino.ID, dino);
+        NavigationManager.NavigateTo("/");
     }
     private void Cancel()
     {
-        NavigationManager.NavigateTo("Index");
+        NavigationManager.NavigateTo("/");
     }
 }
