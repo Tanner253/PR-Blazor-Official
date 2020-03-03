@@ -39,7 +39,7 @@ namespace PrehistoricRealism.Data
 
         [Required(ErrorMessage = "Please make a valid entry")]
         public string Image { get; set; }
-
+        [Required]
         public string Additionalinfo { get; set; } = "null";
 
 

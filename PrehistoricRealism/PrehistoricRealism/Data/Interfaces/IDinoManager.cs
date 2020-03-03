@@ -20,7 +20,7 @@ namespace PrehistoricRealism.Data.Interfaces
 
         Task<List<DinosaurInfo>> GetDinosaurs();
 
-        Task<IOrderedEnumerable<DinosaurInfo>> GetCarnis();
+   
 
         bool DinosaurExists(int id);
     }

@@ -1,11 +1,14 @@
-﻿@page "/carnivores"
+﻿@page "/herbivores"
 @using PrehistoricRealism.Data.Services
 @using PrehistoricRealism.Data
 @inject DinoServices objDinoService
 
-<h3>Carnivore Information</h3>
 
-<h1>Carnivore information</h1>
+<h3>Herbivore Information</h3>
+<NavLink class="nav-link" href="/createdino">
+    <span class="oi oi-plus" aria-hidden="true"></span> Add New
+</NavLink>
+<h1>Herbivore information</h1>
 @if (query == null)
 {
     <p><em>Loading...</em></p>
@@ -19,15 +22,10 @@ else
                 <th>Diet</th>
                 <th>Pack Limits</th>
                 <th>Image</th>
-                <th>
-                    <NavLink class="nav-link" href="/createdino">
-                        <span class="oi oi-plus" aria-hidden="true"></span> Add New
-                </NavLink>
-                </th>
             </tr>
         </thead>
         <tbody>
-  
+
             @foreach (var dino in query)
             {
                 <tr>
@@ -49,19 +47,17 @@ else
         </tbody>
     </table>
 }
+
 @code {
     List<DinosaurInfo> dinoObj;
     IOrderedEnumerable<DinosaurInfo> query;
 
-
     protected override async Task OnInitializedAsync()
     {
         dinoObj = await objDinoService.GetDinosaurs();
-               query = dinoObj.Where(n => n.Diet == DinosaurInfo.Food.Carnivore).OrderBy(n => n.Name);
-
-
+        query = dinoObj.Where(n => n.Diet == DinosaurInfo.Food.Herbivore).OrderBy(n => n.Name);
 
     }
- 
+
 
 }

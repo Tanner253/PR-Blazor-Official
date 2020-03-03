@@ -42,9 +42,9 @@ namespace PrehistoricRealism
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.AddScoped<DinoServices>();
+            services.AddScoped<IDinoManager, DinoServices>();
             services.AddDbContext<ApplicationDbContext>(options =>
                        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<IDinoManager, DinoServices>();
 
         }
 
