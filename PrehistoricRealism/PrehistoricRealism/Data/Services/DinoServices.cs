@@ -87,9 +87,16 @@ namespace PrehistoricRealism.Data.Services
 
         public async Task<List<DinosaurInfo>> GetDinosaurs()
         {
-           
+            try
+            {
                 var dinosaurs = await _db.Dinosaurs.ToListAsync();
                 return dinosaurs;
+
+            }
+            catch (Exception)
+            {
+                return new List<DinosaurInfo>();
+            }
          
         }
 

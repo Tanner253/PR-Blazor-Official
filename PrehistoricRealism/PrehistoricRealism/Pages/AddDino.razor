@@ -11,40 +11,48 @@
             <div class="form-group">
                 <label for="Name" class="control-label">Name</label>
                 <input form="Name" class="form-control" @bind="@dino.Name" />
+                <span  class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label for="Diet" class="control-label">Name</label>
-                <select @bind="dino.Diet" class="form-control" >
+                <select @bind="dino.Diet" class="form-control">
                     <option value="--Select--">--Select--</option>
                     <option value="@DinosaurInfo.Food.Herbivore">--Herbivore--</option>
                     <option value="@DinosaurInfo.Food.Carnivore">--Carnivore--</option>
                     <option value="@DinosaurInfo.Food.Omnivore">--Omnivore--</option>
                 </select>
+                <span class="text-danger"></span>
 
             </div>
             <div class="form-group">
                 <label for="NeedToKnow" class="control-label">Need To Know</label>
                 <input form="NeedToKnow" class="form-control" @bind="@dino.NeedToKnow" />
+                <span class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label for="Behavior" class="control-label">Behavior</label>
                 <input form="Behavior" class="form-control" @bind="@dino.Behavior" />
+                <span class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label for="SocialInteraction" class="control-label">Social Interaction</label>
                 <input form="SocialInteraction" class="form-control" @bind="@dino.SocialInteraction" />
+                <span class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label for="PackLimits" class="control-label">Pack Limits</label>
                 <input form="PackLimits" class="form-control" @bind="@dino.PackLimits" />
+                <span class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label for="Image" class="control-label">Image URL String</label>
                 <input form="Image" class="form-control" @bind="@dino.Image" />
+                <span class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label for="Additionalinfo" class="control-label">Bonus Information</label>
                 <input form="Additionalinfo" class="form-control" @bind="@dino.Additionalinfo" />
+                <span class="text-danger"></span>
             </div>
         </div>
     </div>
