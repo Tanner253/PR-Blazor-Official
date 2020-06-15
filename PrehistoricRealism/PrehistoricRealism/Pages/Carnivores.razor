@@ -2,8 +2,8 @@
 @using PrehistoricRealism.Data.Services
 @using PrehistoricRealism.Data
 @inject DinoServices objDinoService
+@inject NavigationManager NavigationManager
 
-<h3>Carnivore Information</h3>
 
 <h1>Carnivore information</h1>
 @if (query == null)
@@ -18,23 +18,23 @@ else
                 <th>Name</th>
                 <th>Diet</th>
                 <th>Pack Limits</th>
-                <th>Image</th>
+                @* <th>Image</th>*@
                 <th>
                     <NavLink class="nav-link" href="/createdino">
                         <span class="oi oi-plus" aria-hidden="true"></span> Add New
-                </NavLink>
+                    </NavLink>
                 </th>
             </tr>
         </thead>
         <tbody>
-  
+
             @foreach (var dino in query)
             {
                 <tr>
-                    <td>@dino.Name</td>
+                    <td><a href="/Dino/Details/@dino.ID">@dino.Name</a></td>
                     <td>@dino.Diet</td>
                     <td>@dino.PackLimits</td>
-                    <td>@dino.Image</td>
+                    @* <td><img class="dino-list-images" src="@dino.Image"/></td>*@
                     <td>
                         <a class="nav-link" href="EditDino/@dino.ID">
                             <span class="oi oi-pencil" aria-hidden="true"> </span> Edit
@@ -57,11 +57,11 @@ else
     protected override async Task OnInitializedAsync()
     {
         dinoObj = await objDinoService.GetDinosaurs();
-               query = dinoObj.Where(n => n.Diet == DinosaurInfo.Food.Carnivore).OrderBy(n => n.Name);
+        query = dinoObj.Where(n => n.Diet == DinosaurInfo.Food.Carnivore).OrderBy(n => n.Name);
 
 
 
     }
- 
+
 
 }
