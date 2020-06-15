@@ -33,15 +33,15 @@ else
                 </div>
                 <div class="form-group">
                     <label for="NeedToKnow" class="control-label">Need To Know</label>
-                    <input form="NeedToKnow" class="form-control" @bind="@dino.NeedToKnow" />
+                    <textarea form="NeedToKnow" class="form-control" @bind="@dino.NeedToKnow" ></textarea>
                 </div>
                 <div class="form-group">
                     <label for="Behavior" class="control-label">Behavior</label>
-                    <input form="Behavior" class="form-control" @bind="@dino.Behavior" />
+                    <textarea form="Behavior" class="form-control" @bind="@dino.Behavior" ></textarea>
                 </div>
                 <div class="form-group">
                     <label for="SocialInteraction" class="control-label">Social Interaction</label>
-                    <input form="SocialInteraction" class="form-control" @bind="@dino.SocialInteraction" />
+                    <textarea form="SocialInteraction" class="form-control" @bind="@dino.SocialInteraction" ></textarea>
                 </div>
                 <div class="form-group">
                     <label for="PackLimits" class="control-label">Pack Limits</label>
@@ -49,12 +49,15 @@ else
                 </div>
                 <div class="form-group">
                     <label for="Image" class="control-label">Image URL String</label>
-                    <img width="500" src="@dino.Image" alt="@dino.Name" />
+                   
                     <input form="Image" class="form-control" @bind="@dino.Image" />
                 </div>
                 <div class="form-group">
+                    <img class="img-fluid" src="@dino.Image" alt="@dino.Name" />
+                </div>
+                <div class="form-group">
                     <label for="Additionalinfo" class="control-label">Bonus Information</label>
-                    <input form="Additionalinfo" class="form-control" @bind="@dino.Additionalinfo" />
+                    <textarea form="Additionalinfo" class="form-control" @bind="@dino.Additionalinfo" ></textarea>
                 </div>
             </div>
         </div>
@@ -82,10 +85,26 @@ else
     private async void UpdateDinosaur()
     {
         await objDinoServices.UpdateDinosaur(dino.ID, dino);
-        NavigationManager.NavigateTo("/");
+           if(
+            dino.Diet == DinosaurInfo.Food.Herbivore)
+        {
+
+            NavigationManager.NavigateTo("/herbivores");
+        }else if(  dino.Diet == DinosaurInfo.Food.Carnivore)
+        {
+            NavigationManager.NavigateTo("/carnivores");
+        }
     }
     private void Cancel()
     {
-        NavigationManager.NavigateTo("/");
+        if(
+            dino.Diet == DinosaurInfo.Food.Herbivore)
+        {
+
+            NavigationManager.NavigateTo("/herbivores");
+        }else if(  dino.Diet == DinosaurInfo.Food.Carnivore)
+        {
+            NavigationManager.NavigateTo("/carnivores");
+        }
     }
 }
